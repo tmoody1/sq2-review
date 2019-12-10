@@ -1,4 +1,4 @@
-package com.ravn.bookshop;
+package com.ravn.review;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
