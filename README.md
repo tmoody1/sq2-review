@@ -1,3 +1,1 @@
-# sq2-review
-
-Tom C can edit :-)
+# sq2-gateway
