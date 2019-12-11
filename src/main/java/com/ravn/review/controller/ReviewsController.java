@@ -5,6 +5,7 @@ import com.ravn.review.Review;
 import com.ravn.review.storage.ReviewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,22 +19,22 @@ public class ReviewsController {
     @Autowired
     private ReviewsRepository reviewsRepository;
 
-    @GetMapping("/reviews")
+    @GetMapping(value = "/reviews", produces = { MediaType.APPLICATION_JSON_VALUE})
     public List<Review> getReviews() {
         return reviewsRepository.findAll();
     }
 
-    @PostMapping("/reviews")
+    @PostMapping(value = "/reviews", produces = { MediaType.APPLICATION_JSON_VALUE}, consumes = { MediaType.APPLICATION_JSON_VALUE})
     public Review addReview(@RequestBody Review review) {
         return reviewsRepository.insert(review);
     }
 
-    @GetMapping("/reviews/{reviewId}")
+    @GetMapping(value = "/reviews/{reviewId}", produces = { MediaType.APPLICATION_JSON_VALUE})
     public Review getReview(@PathVariable String reviewId) {
         return reviewsRepository.findById(reviewId).orElseThrow(ReviewNotFoundException::new);
     }
 
-    @PostMapping("/reviews/{reviewId}/comment")
+    @PostMapping(value = "/reviews/{reviewId}/comment", produces = { MediaType.APPLICATION_JSON_VALUE}, consumes = { MediaType.APPLICATION_JSON_VALUE})
     public Review addReviewComment(@PathVariable String reviewId, @RequestBody Comment comment) {
         Review review = reviewsRepository.findById(reviewId)
                 .orElseThrow(ReviewNotFoundException::new);
@@ -43,7 +44,7 @@ public class ReviewsController {
         return reviewsRepository.save(review);
     }
 
-    @PutMapping("/reviews/{reviewId}/like")
+    @PutMapping(value = "/reviews/{reviewId}/like", produces = { MediaType.APPLICATION_JSON_VALUE})
     public Review likeReview(@PathVariable String reviewId) {
         Review review = reviewsRepository.findById(reviewId)
                 .orElseThrow(ReviewNotFoundException::new);
@@ -51,7 +52,7 @@ public class ReviewsController {
         return reviewsRepository.save(review);
     }
 
-    @GetMapping("/reviewsForIsbn/{isbn}")
+    @GetMapping(value = "/reviewsForIsbn/{isbn}", produces = { MediaType.APPLICATION_JSON_VALUE})
     public List<Review> getBookReviews(@PathVariable String isbn) {
         return reviewsRepository.findByIsbn(isbn);
     }
