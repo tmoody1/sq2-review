@@ -24,7 +24,7 @@ public class ReviewsController {
     }
 
     @PostMapping("/reviews")
-    public Review addReview(Review review) {
+    public Review addReview(@RequestBody Review review) {
         return reviewsRepository.insert(review);
     }
 
@@ -34,7 +34,7 @@ public class ReviewsController {
     }
 
     @PostMapping("/reviews/{reviewId}/comment")
-    public Review addReviewComment(@PathVariable String reviewId, Comment comment) {
+    public Review addReviewComment(@PathVariable String reviewId, @RequestBody Comment comment) {
         Review review = reviewsRepository.findById(reviewId)
                 .orElseThrow(ReviewNotFoundException::new);
         if(review.getComments() == null)
