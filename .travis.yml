@@ -5,4 +5,4 @@ branches:
 jobs:
   include:
     stage: test
-    script: mvn clean install
+    script: mvn clean install -DskipTests
