@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @EnableAutoConfiguration
@@ -40,6 +41,8 @@ public class ReviewsController {
                 .orElseThrow(ReviewNotFoundException::new);
         if(review.getComments() == null)
             review.setComments(new ArrayList<>());
+        if(comment.getId() == null)
+            comment.setId(UUID.randomUUID().toString());
         review.getComments().add(comment);
         return reviewsRepository.save(review);
     }
